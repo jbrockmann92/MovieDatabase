@@ -48,8 +48,7 @@ namespace WebAPISample.Controllers
         [HttpPut]
         public void Put(int id, [FromBody]string value)
         {
-            var movieToChange = _context.Movies.Where(x => x.MovieId == id).FirstOrDefault();
-            movieToChange.Director = value
+            // Update movie in db logic
         }
 
         // DELETE api/movie/5

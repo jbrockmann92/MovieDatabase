@@ -38,7 +38,8 @@ namespace WebAPISample.Controllers
         [HttpPost]
         public void Post([FromBody]Movie value)
         {
-            // Create movie in db logic
+            _context.Movies.Add(value);
+            _context.SaveChanges();
         }
 
         // PUT api/movie/5

@@ -31,6 +31,7 @@ namespace WebAPISample.Controllers
         public string Get(int id)
         {
             // Retrieve movie by id from db logic
+            //Need validation here?
             var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault().Title;
             return movie;
             }

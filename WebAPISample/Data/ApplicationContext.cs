@@ -13,12 +13,7 @@ namespace WebAPISample.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Seed data - needs migration
-            // modelBuilder.Entity<Movie>
-            //  .HasData(
-            //  new Movie{Fill All Properties}
-            //  );
-            // View PlayerTracker project for example
+
         }
 
         public DbSet<Movie> Movies { get; set; }

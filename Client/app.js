@@ -90,12 +90,6 @@
         });
     }
 
-    function DisplayMovie()
-    {
-        let params = new URLSearchParams(window.location.search);
-        movieId = params.get("movieId");
-    }
-
 $(document).ready(BuildTable);
     $('#Create').submit( processCreateForm );
     $('#Search').submit( processSearchForm );

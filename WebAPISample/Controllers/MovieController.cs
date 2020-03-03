@@ -46,9 +46,9 @@ namespace WebAPISample.Controllers
 
         // PUT api/movie/5
         [HttpPut]
-        public void Put(int id, [FromBody]Movie movie)
+        public void Put([FromBody]Movie movie)
         {
-            var movieToChange = _context.Movies.Where(x => x.MovieId == id).FirstOrDefault();
+            var movieToChange = _context.Movies.Where(x => x.MovieId == movie.MovieId).FirstOrDefault();
             movieToChange.Director = movie.Director;
             movieToChange.Genre = movie.Genre;
             movieToChange.Title = movie.Title;

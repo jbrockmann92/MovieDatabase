@@ -77,3 +77,63 @@ function BuildTable()
                 }
     })
 }
+
+//my stuff
+
+var movies = [];
+
+$.ajax({
+    dataType: 'json',
+    url: "https://localhost:44325/api/movie",
+    type: "get",
+    success: function( data ){
+                $.each( data, function(key, movie) {
+                    $("#MovieInfo").append("<tr>" +
+                    "<td>" + movie["title"] + "</td>" +
+                    "<td>" + movie["genre"] + "</td>" +
+                    "<td>" + movie["director"] + "</td>" +
+                    "<td>" + "<button" + " onclick=" + "editMovie(" + movie["movieId"] + ")" + ">Edit</button>" + "</td>" +
+                "</tr>");
+                });
+            }
+})
+
+var movie;
+
+function editMovie(id){
+    //Need to take in the movie's id (done), then get the movie from the db that has that id,
+    //Then call the put method in the c# code
+
+    $.ajax({
+        dataType: 'json',
+        url: "https://localhost:44325/api/movie/" + id,
+        async: false,
+        type: "get",
+        success: function( movie ){
+            movie.title = prompt("Please enter a new title", movie.title);
+            movie.genre = prompt("Please enter a new genre", movie.genre);
+            movie.director = prompt("Please enter a new director", movie.director);
+            movie.movieId = id;
+            putMovie(movie, id);
+        },
+        error: function(){
+            alert("Error!");
+        }
+    });
+}
+
+function putMovie(data){
+    $.ajax({
+        url: "https://localhost:44325/api/movie/",
+        type: "put",
+        dataType: "text",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function(){
+            
+        },
+        error: function(){
+            alert("Didn't work.")
+        }
+    });
+}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebAPISample.Data;
 using WebAPISample.Models;
 
@@ -28,11 +29,11 @@ namespace WebAPISample.Controllers
 
         // GET api/movie/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Movie Get(int id)
         {
             // Retrieve movie by id from db logic
             //Need validation here?
-            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault().Title;
+            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
             return movie;
             }
 
@@ -48,6 +49,11 @@ namespace WebAPISample.Controllers
         [HttpPut]
         public void Put([FromBody]Movie movie)
         {
+            //Won't pass in a movie object, but a json object? Will probably need to do the parse thing or whatever it's called
+
+            //JsonConvert.DeserializeObject(movie);
+            //Might want to change Movie passed in to string
+
             var movieToChange = _context.Movies.Where(x => x.MovieId == movie.MovieId).FirstOrDefault();
             movieToChange.Director = movie.Director;
             movieToChange.Genre = movie.Genre;

@@ -23,21 +23,16 @@ $.ajax({
                     "<td>" + movie["title"] + "</td>" +
                     "<td>" + movie["genre"] + "</td>" +
                     "<td>" + movie["director"] + "</td>" +
+                    "<td>" + "<button id=" + "EditMovie" + ">Edit</button>" + "</td>" +
                 "</tr>");
                 });
             }
 })
 
-// $("MovieInfo").html(printAllMovies());
-
-// function printAllMovies(){
-//     var movieInjection;
-//     for(movie in movies){
-//         movieInjection.appendTo("<tr>" +
-//             "<td>" + movies[movie].Title + "</td>" +
-//             "<td>" + movies[movie].Genre + "</td>" +
-//             "<td>" + movies[movie].Director + "</td>" +
-//         "</tr>")
-//     }
-//     return movieInjection;
-// }
+$("#EditMovie").submit(function(){
+    var test = $('<button/>',
+    {
+        text: 'Test',
+        click: function() {alert(hi);}
+    });
+})

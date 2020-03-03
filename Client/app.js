@@ -116,4 +116,3 @@
     $('#Create').submit( processCreateForm );
     $('#Search').submit( processSearchForm );
 })(jQuery);
-

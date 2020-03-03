@@ -19,11 +19,11 @@ $.ajax({
     type: "get",
     success: function( data ){
                 $.each( data, function(key, movie) {
-                    document.getElementById("MovieInfo").innerHTML += "<tr>" +
+                    $("#MovieInfo").append("<tr>" +
                     "<td>" + movie["title"] + "</td>" +
                     "<td>" + movie["genre"] + "</td>" +
                     "<td>" + movie["director"] + "</td>" +
-                "</tr>";
+                "</tr>");
                 });
             }
 })

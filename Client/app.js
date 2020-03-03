@@ -2,7 +2,8 @@
     function processForm( e ){
         var dict = {
         	Title : this["title"].value,
-        	Director: this["director"].value
+        	Director: this["director"].value,
+        	Genre: this["genre"].value
         };
 
         $.ajax({
@@ -21,6 +22,21 @@
 
         e.preventDefault();
     }
+
+    $.ajax({
+        dataType: 'json',
+        url: "https://localhost:44325/api/movie",
+        type: "get",
+        success: function( data ){
+                    $.each( data, function(key, movie) {
+                        $("#MovieInfo").append("<tr>" +
+                        "<td>" + movie["title"] + "</td>" +
+                        "<td>" + movie["genre"] + "</td>" +
+                        "<td>" + movie["director"] + "</td>" +
+                    "</tr>");
+                    });
+                }
+    })
 
     $('#my-form').submit( processForm );
 })(jQuery);

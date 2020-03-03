@@ -130,17 +130,17 @@
     {
         let movies = data;
         // movies = movies.filter(movie => title == "" ? true : movie["title"] == title && director == "" ? true : movie["director"] && genre == "" ? true : movie["genre"]);
-        if(title != "")
+        if(title != "" && title != null)
         {
-            movies.filter(movie => movie["title"] == title);
+            movies = movies.filter(movie => movie["title"] == title);
         }
-        if(director != "")
+        if(director != "" && director != null)
         {
-            movies.filter(movie => movie["title"] == director);
+            movies = movies.filter(movie => movie["director"] == director);
         }
-        if(genre != "")
+        if(genre != "" && genre != null)
         {
-            movies.filter(movie => movie["title"] == genre);
+            movies = movies.filter(movie => movie["genre"] == genre);
         }
 
         return movies;

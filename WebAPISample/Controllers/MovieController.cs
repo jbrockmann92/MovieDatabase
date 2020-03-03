@@ -28,11 +28,11 @@ namespace WebAPISample.Controllers
 
         // GET api/movie/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Movie Get(int id)
         {
             // Retrieve movie by id from db logic
             //Need validation here?
-            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault().Title;
+            var movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
             return movie;
             }
 

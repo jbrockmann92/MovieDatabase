@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html id="index">
 <head>
     <title>jQuery AJAX POST Form</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="Movies.css">
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
 </head>
 <body>
 
-<div id="response">
-    <pre></pre>
-</div>
-
-<form id="Search">
+<form id="Search" onload="DisplayMovie()">
     <input type="text" name="title" placeholder="Title" />
     <input type="text" name="director" placeholder="Director" />
     <input type="text" name="genre" placeholder="Genre" />
@@ -22,12 +17,7 @@
 
 <form id='Create'>
     <table id="MovieInfo" class="table">
-        <tr class="table-primary">
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Director</th>
-            <th></th>
-        </tr>
+        
     </table>
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

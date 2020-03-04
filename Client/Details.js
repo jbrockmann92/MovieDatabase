@@ -3,8 +3,7 @@ function displayMovie() {
     $("#MovieDirector").html(movie["director"]);
     $("#MovieGenre").html(movie["genre"]);
     var image = movie["imageUrl"];
-    $("#MovieImage").html("<img style='height:inherit;width:inherit' src='" + image + "'>");
-    // $("#MovieImage").html("<img src='https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg'>");
+    $("#MovieImage").html("<img style='height:inherit; width:inherit;' src='" + image + "'>");
 }
 
 function getMovie() {
@@ -25,19 +24,22 @@ function getMovie() {
 
 function editMovie() {
     let input = prompt("Please Enter the URL of the image you'd like to add", "");
-    if(input != null && input != "")
-    {
+    if (input != null && input != "") {
         movie["imageUrl"] = input;
     }
-    else if(input = " ")
-    {
+    else if (input = " ") {
         return;
     }
-    else
-    {
+    else {
         editMovie();
     }
 
+    putMovie();
+}
+
+var movie;
+
+function putMovie() {
     $.ajax({
         url: "https://localhost:44325/api/movie/",
         type: "put",
@@ -48,8 +50,6 @@ function editMovie() {
             displayMovie();
         }
     });
-}
-
-var movie;
+};
 
 $(document).ready(getMovie);

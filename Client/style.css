@@ -1,0 +1,19 @@
+input{
+    background-color: mintcream;
+    margin-left: 20px;
+}
+
+table{
+    font-size: larger;
+    font-weight: bold;
+}
+
+button{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+tr{
+    text-align: center;
+    border-left: black;
+}

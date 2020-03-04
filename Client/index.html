@@ -4,20 +4,23 @@
     <title>jQuery AJAX POST Form</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body style="background-color: lightgray;">
 
-<div class="row container">
-    <form id="Search">
-        <input type="text" id="searchtitle" name="searchtitle" placeholder="Title"/>
-        <input type="text" id="searchgenre" name="searchgenre" placeholder="Genre"/>
-        <input type="text" id="searchdirector" name="searchdirector" placeholder="Director"/>
-    
-        <button id='Search' type="submit">Search</button>
-    </form>
-    
-    <a href="index.html">clear filters</a>
-</div>
+<center style="margin-bottom: 15px; margin-top: 10px;">
+    <div class="row container">
+        <form id="Search">
+            <input type="text" id="searchtitle" name="searchtitle" placeholder="Title"/>
+            <input type="text" id="searchgenre" name="searchgenre" placeholder="Genre"/>
+            <input type="text" id="searchdirector" name="searchdirector" placeholder="Director"/>
+        
+            <button id='Search' type="submit">Search</button>| 
+        </form>
+        
+        <button href="index.html">clear filters</button>
+    </div>
+</center>
 
 <form id='Create'>
     <table id="MovieInfo" class="table">

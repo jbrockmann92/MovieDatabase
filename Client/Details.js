@@ -12,6 +12,7 @@ function DisplayMovie()
                 $("#MovieTitle").append(data["title"]);
                 $("#MovieDirector").append(data["director"]);
                 $("#MovieGenre").append(data["genre"]);
+                $("#MovieImage").append("<img style= 'height:inherit; width:inherit'; src=" + data["imageUrl"] + "></img>");
                 $("#MovieButton").append("<button onclick=editMovieImage(" + movieId + ")>Add or change this image</button>");
             },
         });

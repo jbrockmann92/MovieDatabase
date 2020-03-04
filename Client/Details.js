@@ -14,8 +14,9 @@
                 $("#MovieTitle").append(data["title"]);
                 $("#MovieDirector").append(data["director"]);
                 $("#MovieGenre").append(data["genre"]);
-            }
+            },
         });
+        $("#MovieUrl").append("<button onclick=editMovieImage(" + movieId + ")>Add or change this image</button>");
     }
 
     $(document).ready(DisplayMovie);

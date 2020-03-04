@@ -7,20 +7,27 @@ function processCreateForm( e ){
 
     $.ajax({
         url: 'https://localhost:44325/api/movie',
-        dataType: 'json',
+        dataType: 'text',
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify(dict),
-        success: function( data, textStatus, jQxhr ){
-            $('#response pre').html( data );
+        success: function(){
+            BuildTable();
         }
     })
         
-    BuildTable();
     e.preventDefault();
 }
 
 function BuildTable() {
+    let params = new URLSearchParams(window.location.search);
+
+    var dict = {
+        Title : params.get("searchtitle"),
+        Director: params.get("searchdirector"),
+        Genre: params.get("searchgenre")
+    };
+
     $("#MovieInfo").html(""
         + "<tr class='table-primary'>"
         + "<th>Title</th>"
@@ -33,7 +40,8 @@ function BuildTable() {
         url: "https://localhost:44325/api/movie",
         type: "get",
         success: function (data) {
-            $.each(data, function (key, movie) {
+            let movies = filterMovies(data, dict.Title, dict.Director, dict.Genre);
+            $.each(movies, function (key, movie) {
                 $("#MovieInfo").append("<tr>"
                     + "<td>"
                     + "<a href='Detail.html?movieId=" + movie["movieId"] + "'>"
@@ -41,20 +49,14 @@ function BuildTable() {
                     + "</a>"
                     + "</td>"
                     + "<td>"
-                    + movie["director"]
-                    + "</td>"
-                    + "<td>"
                     + movie["genre"]
                     + "</td>"
                     + "<td>"
-                    + "<button type='button'" 
-                    + " onclick=" 
-                    + "editMovie(" 
-                    + movie["movieId"] 
-                    + ")" 
-                    + ">Edit</button>" 
-                    + "</td>" 
-                    + "</tr>");
+                    + movie["director"]
+                    + "</td>"
+                    + "<td>"
+                    + "<button onclick='editMovie(" + movie["movieId"] + ")' type='button'>Edit</button>" + "</td>" +
+                    "</tr>");
             })
             $("#MovieInfo").append("<tr>"
                 + "<td>"
@@ -74,11 +76,41 @@ function BuildTable() {
     });
 }
 
-$(document).ready(BuildTable);
-$('#Create').submit( processCreateForm );
-deleteFinal();
+function filterMovies(data, title=null, director=null, genre=null)
+{
+    let movies = data;
+    // movies = movies.filter(movie => title == "" ? true : movie["title"] == title && director == "" ? true : movie["director"] && genre == "" ? true : movie["genre"]);
+    if(title != "" && title != null)
+    {
+        movies = movies.filter(movie => movie["title"] == title);
+    }
+    if(director != "" && director != null)
+    {
+        movies = movies.filter(movie => movie["director"] == director);
+    }
+    if(genre != "" && genre != null)
+    {
+        movies = movies.filter(movie => movie["genre"] == genre);
+    }
 
-var movie;
+    return movies;
+}
+
+function editMovieImage(id){
+    $.ajax({
+        dataType: 'json',
+        url: "https://localhost:44325/api/movie/" + id,
+        //Need to 
+        type: "get",
+        data: {},
+        success: function( movie ){
+            movie.title = prompt("Please enter the url of the image you'd like to use");
+            movie.movieId = id;
+            putMovie(movie);
+        }
+        //Not as nice as it could be. Will currently go back and rebuild the table after updating
+    });
+}
 
 function editMovie(id){
     //Need to take in the movie's id (done), then get the movie from the db that has that id,
@@ -87,21 +119,20 @@ function editMovie(id){
     $.ajax({
         dataType: 'json',
         url: "https://localhost:44325/api/movie/" + id,
-        async: false,
         type: "get",
+        data: {},
         success: function( movie ){
             movie.title = prompt("Please enter a new title", movie.title);
             movie.genre = prompt("Please enter a new genre", movie.genre);
             movie.director = prompt("Please enter a new director", movie.director);
             movie.movieId = id;
-            putMovie(movie, id);
+            putMovie(movie);
         },
         error: function(){
             alert("Error!");
         }
     });
 }
-
 function putMovie(data){
     $.ajax({
         url: "https://localhost:44325/api/movie/",
@@ -111,13 +142,9 @@ function putMovie(data){
         contentType: "application/json",
         success: function(){
             BuildTable();
-        },
-        error: function(){
-            alert("Didn't work.")
         }
     });
 }
 
-function deleteFinal(){
-
-}
+$(document).ready(BuildTable);
+$('#Create').submit(processCreateForm);

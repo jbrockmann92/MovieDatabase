@@ -96,22 +96,6 @@ function filterMovies(data, title=null, director=null, genre=null)
     return movies;
 }
 
-function editMovieImage(id){
-    $.ajax({
-        dataType: 'json',
-        url: "https://localhost:44325/api/movie/" + id,
-        //Need to 
-        type: "get",
-        data: {},
-        success: function( movie ){
-            movie.title = prompt("Please enter the url of the image you'd like to use");
-            movie.movieId = id;
-            putMovie(movie);
-        }
-        //Not as nice as it could be. Will currently go back and rebuild the table after updating
-    });
-}
-
 function editMovie(id){
     //Need to take in the movie's id (done), then get the movie from the db that has that id,
     //Then call the put method in the c# code

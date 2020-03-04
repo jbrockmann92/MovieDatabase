@@ -9,8 +9,8 @@ using WebAPISample.Data;
 namespace WebAPISample.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200304134533_AddedImageUrlPropertyToMovieModel")]
-    partial class AddedImageUrlPropertyToMovieModel
+    [Migration("20200304144122_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,6 +78,14 @@ namespace WebAPISample.Migrations
                             Director = "John McTiernan",
                             Genre = "Action",
                             Title = "Die Hard"
+                        },
+                        new
+                        {
+                            MovieId = 6,
+                            Director = "Gus Van Sant",
+                            Genre = "Drama",
+                            ImageUrl = "http://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/good_will_hed.jpg?itok=C57XTx1N",
+                            Title = "Good WilL Hunting"
                         });
                 });
 #pragma warning restore 612, 618

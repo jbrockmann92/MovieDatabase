@@ -49,11 +49,6 @@ namespace WebAPISample.Controllers
         [HttpPut]
         public void Put([FromBody]Movie movie)
         {
-            //Won't pass in a movie object, but a json object? Will probably need to do the parse thing or whatever it's called
-
-            //JsonConvert.DeserializeObject(movie);
-            //Might want to change Movie passed in to string
-
             var movieToChange = _context.Movies.Where(x => x.MovieId == movie.MovieId).FirstOrDefault();
             movieToChange.Director = movie.Director;
             movieToChange.Genre = movie.Genre;
@@ -62,6 +57,7 @@ namespace WebAPISample.Controllers
             {
                 movieToChange.ImageUrl = movie.ImageUrl;
             }
+            //Get rid of assigning movieToChange?
 
             _context.Update(movieToChange);
             _context.SaveChanges();

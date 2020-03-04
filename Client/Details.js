@@ -1,53 +1,55 @@
-function DisplayMovie()
-    {
-        let params = new URLSearchParams(window.location.search);
-        movieId = params.get("movieId");
+function displayMovie() {
+    $("#MovieTitle").html(movie["title"]);
+    $("#MovieDirector").html(movie["director"]);
+    $("#MovieGenre").html(movie["genre"]);
+    var image = movie["imageUrl"];
+    $("#MovieImage").html("<img style='height:inherit; width:inherit;' src='" + image + "'>");
+}
 
-        $.ajax({
-            url: 'https://localhost:44325/api/movie/' + movieId,
-            dataType: 'json',
-            type: 'get',
-            contentType: 'application/json',
-            success: function( data ){
-                $("#MovieTitle").append(data["title"]);
-                $("#MovieDirector").append(data["director"]);
-                $("#MovieGenre").append(data["genre"]);
-                $("#MovieImage").append("<img style= 'height:inherit; width:inherit' src=" + data["imageUrl"] + "></img>");
-                $("#MovieButton").append("<button onclick=editMovieImage(" + movieId + ")>Add or change this image</button>");
-            },
-        });
+function getMovie() {
+    let params = new URLSearchParams(window.location.search);
+    movieId = params.get("movieId");
+
+    $.ajax({
+        url: 'https://localhost:44325/api/movie/' + movieId,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        success: function (data) {
+            movie = data;
+            displayMovie();
+        }
+    });
+}
+
+function editMovie() {
+    let input = prompt("Please Enter the URL of the image you'd like to add", "");
+    if (input != null && input != "") {
+        movie["imageUrl"] = input;
+    }
+    else if (input = " ") {
+        return;
+    }
+    else {
+        editMovie();
     }
 
-    function editMovieImage(id){
-        $.ajax({
-            dataType: 'json',
-            url: "https://localhost:44325/api/movie/" + id,
-            async: false,
-            type: "get",
-            data: {},
-            success: function( movie ){
-                movie.ImageUrl = prompt("Please enter the url of the image you'd like to use", movie.imageUrl);
-                movie.movieId = id;
-                putMovie(movie);
-            },
-            error: function(){
-                alert("Error!");
-            }
-        });
-    }
+    putMovie();
+}
 
-    function putMovie(data){
-        $.ajax({
-            url: "https://localhost:44325/api/movie/",
-            type: "put",
-            dataType: "text",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function(){
-                location.reload();
-                DisplayMovie();
-            }
-        });
-    };
+var movie;
 
-    $(document).ready(DisplayMovie);
+function putMovie() {
+    $.ajax({
+        url: "https://localhost:44325/api/movie/",
+        type: "put",
+        dataType: "text",
+        data: JSON.stringify(movie),
+        contentType: "application/json",
+        success: function () {
+            displayMovie();
+        }
+    });
+};
+
+$(document).ready(getMovie);

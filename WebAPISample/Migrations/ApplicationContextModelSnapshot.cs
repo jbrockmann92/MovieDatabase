@@ -47,6 +47,7 @@ namespace WebAPISample.Migrations
                             MovieId = 1,
                             Director = "Martin Scorsese",
                             Genre = "Drama",
+                            ImageUrl = "",
                             Title = "The Departed"
                         },
                         new
@@ -54,6 +55,7 @@ namespace WebAPISample.Migrations
                             MovieId = 2,
                             Director = "Christopher Nolan",
                             Genre = "Drama",
+                            ImageUrl = "",
                             Title = "The Dark Knight"
                         },
                         new
@@ -61,6 +63,7 @@ namespace WebAPISample.Migrations
                             MovieId = 3,
                             Director = "Christopher Nolan",
                             Genre = "Drama",
+                            ImageUrl = "",
                             Title = "Inception"
                         },
                         new
@@ -68,6 +71,7 @@ namespace WebAPISample.Migrations
                             MovieId = 4,
                             Director = "David Gordon Green",
                             Genre = "Comedy",
+                            ImageUrl = "",
                             Title = "Pineapple Express"
                         },
                         new
@@ -75,6 +79,7 @@ namespace WebAPISample.Migrations
                             MovieId = 5,
                             Director = "John McTiernan",
                             Genre = "Action",
+                            ImageUrl = "",
                             Title = "Die Hard"
                         },
                         new

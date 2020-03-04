@@ -12,18 +12,18 @@ function processCreateForm( e ){
         contentType: 'application/json',
         data: JSON.stringify(dict),
         success: function(){
-            BuildTable();
+            BuildTable(true);
         }
     })
         
     e.preventDefault();
 }
 
-function BuildTable() {
+function BuildTable(NewMovie=false) {
     let params = new URLSearchParams(window.location.search);
 
     var dict = {
-        Title : params.get("searchtitle"),
+        Title: params.get("searchtitle"),
         Director: params.get("searchdirector"),
         Genre: params.get("searchgenre")
     };
@@ -35,45 +35,62 @@ function BuildTable() {
         + "<th>Director</th>"
         + "<th></th>"
         + "</tr>");
+
+    if(currentMovies == null || NewMovie)
+    {
+        currentMovies = getMovies();
+    }
+    if(dict.Title != null || dict.Director != null || dict.Genre  != null)
+    {
+        currentMovies = filterMovies(currentMovies, dict.Title, dict.Director, dict.Genre);
+    }
+
+    for (movie in currentMovies) {
+        $("#MovieInfo").append("<tr>"
+            + "<td>"
+            + "<a href='Detail.html?movieId=" + currentMovies[movie]["movieId"] + "'>"
+            + currentMovies[movie]["title"]
+            + "</a>"
+            + "</td>"
+            + "<td>"
+            + currentMovies[movie]["genre"]
+            + "</td>"
+            + "<td>"
+            + currentMovies[movie]["director"]
+            + "</td>"
+            + "<td>"
+            + "<button onclick='editMovie(" + currentMovies[movie]["movieId"] + ")' type='button'>Edit</button>" + "</td>" +
+            "</tr>");
+    }
+
+    $("#MovieInfo").append("<tr>"
+        + "<td>"
+        + "<input type='text' name='title' placeholder='Title' /> "
+        + "</td>"
+        + "<td>"
+        + "<input type='text' name='genre' placeholder='Genre' />"
+        + "</td>"
+        + "<td>"
+        + "<input type='text' name='director' placeholder='Director' />"
+        + "</td>"
+        + "<td>"
+        + "<button id='CreateButton' type='submit'>Create</button>"
+        + "</td>"
+        + "</tr>");
+}
+
+function getMovies()
+{
+    var movies;
     $.ajax({
-        dataType: 'json',
         url: "https://localhost:44325/api/movie",
         type: "get",
+        async:false,
         success: function (data) {
-            let movies = filterMovies(data, dict.Title, dict.Director, dict.Genre);
-            $.each(movies, function (key, movie) {
-                $("#MovieInfo").append("<tr>"
-                    + "<td>"
-                    + "<a href='Detail.html?movieId=" + movie["movieId"] + "'>"
-                    + movie["title"]
-                    + "</a>"
-                    + "</td>"
-                    + "<td>"
-                    + movie["genre"]
-                    + "</td>"
-                    + "<td>"
-                    + movie["director"]
-                    + "</td>"
-                    + "<td>"
-                    + "<button onclick='editMovie(" + movie["movieId"] + ")' type='button'>Edit</button>" + "</td>" +
-                    "</tr>");
-            })
-            $("#MovieInfo").append("<tr>"
-                + "<td>"
-                + "<input type='text' name='title' placeholder='Title' /> "
-                + "</td>"
-                + "<td>"
-                + "<input type='text' name='genre' placeholder='Genre' />"
-                + "</td>"
-                + "<td>"
-                + "<input type='text' name='director' placeholder='Director' />"
-                + "</td>"
-                + "<td>"
-                + "<button id='CreateButton' type='submit'>Create</button>"
-                + "</td>"
-                + "</tr>");
+            movies = data;
         }
     });
+    return movies;
 }
 
 function filterMovies(data, title=null, director=null, genre=null)
@@ -130,5 +147,28 @@ function putMovie(data){
     });
 }
 
+function defaultSearch(){
+    let params = new URLSearchParams(window.location.search);
+    let title = ((params.get("searchtitle") == "" || params.get("searchtitle") == null)? null : params.get("searchtitle"));
+    let genre = ((params.get("searchgenre") == "" || params.get("searchgenre") == null) ? null : params.get("searchgenre"));
+    let director = ((params.get("searchdirector") == "" || params.get("searchdirector") == null) ? null : params.get("searchdirector"));
+    if(title != null)
+    {
+        document.getElementById("searchtitle").defaultValue = title;
+    }
+    if(genre != null)
+    {
+        document.getElementById("searchgenre").defaultValue = genre;
+    }
+    if(director != null)
+    {
+        document.getElementById("searchdirector").defaultValue = director;
+    }
+}
+
+var currentMovies;
+
 $(document).ready(BuildTable);
-$('#Create').submit(processCreateForm);
+$( window ).on( "load", defaultSearch);
+$('#Create').submit( processCreateForm );
+$('#Search').submit( BuildTable );
